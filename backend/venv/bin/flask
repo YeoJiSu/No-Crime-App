@@ -1,4 +1,4 @@
-#!/Users/yeojisu/Desktop/No-Crime/api/venv/bin/python
+#!/Users/yeojisu/Documents/No-Crime/backend/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
