@@ -4,7 +4,7 @@ import json
 class AdministrativeDistrict(Resource): 
     # 도/특별시/광역시 조회
     def get(self):
-        distinct_1= json.load(open('model/district.json', 'rb'))
+        distinct_1= json.load(open('file/district.json', 'rb'))
         keys = [key for key in distinct_1]
         return {'도/특별시/광역시':keys}
     
@@ -15,7 +15,7 @@ class AdministrativeDistrict(Resource):
         args = parser.parse_args()
         argument = args['도/특별시/광역시']
         
-        distinct_1= json.load(open('model/district.json', 'rb'))
+        distinct_1= json.load(open('file/district.json', 'rb'))
         data = distinct_1[argument]
         return {'data': data}
         

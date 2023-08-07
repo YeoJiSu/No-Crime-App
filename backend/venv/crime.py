@@ -32,12 +32,12 @@ class PredictCrime(Resource):
         place = LabelEncoder()
         day = LabelEncoder()
         time = LabelEncoder()
-        region.classes_ = np.load('model/region.npy', allow_pickle=True)
-        place.classes_ = np.load('model/place.npy', allow_pickle=True)
-        day.classes_ = np.load('model/day.npy', allow_pickle=True)
-        time.classes_ = np.load('model/time.npy', allow_pickle=True)
-        x_td_mu,x_td_std,y_td_mu,y_td_std = np.load('model/new_x_y_mu_std.npy',allow_pickle=True)
-        model = p.load(open('model/linear.pickle', 'rb'))
+        region.classes_ = np.load('file/region.npy', allow_pickle=True)
+        place.classes_ = np.load('file/place.npy', allow_pickle=True)
+        day.classes_ = np.load('file/day.npy', allow_pickle=True)
+        time.classes_ = np.load('file/time.npy', allow_pickle=True)
+        x_td_mu,x_td_std,y_td_mu,y_td_std = np.load('file/new_x_y_mu_std.npy',allow_pickle=True)
+        model = p.load(open('file/linear.pickle', 'rb'))
         
         # 위치,	장소, 요일, 시간대,	인구수
         parser = reqparse.RequestParser()
