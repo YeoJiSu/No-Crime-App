@@ -21,4 +21,13 @@ class AdministrativeDistrict(Resource):
         except:
             return {"message": "json으로 전달되는 body 형식이 잘못되었습니다."}
 
+# 인구수 조회 api
+class Population(Resource): 
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('도.특별시.광역시')
+        parser.add_argument('시.군.구')
+        
+        
+        
 
