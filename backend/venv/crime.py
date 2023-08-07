@@ -50,23 +50,27 @@ class PredictCrime(Resource):
         # creates dict
         args = parser.parse_args()
         
-        X_new = np.array([
-            int(region.transform([args['위치']])[0]),
-            int(place.transform([args['장소']])[0]),
-            int(day.transform([args['요일']])[0]),
-            int(time.transform([args['시간대']])[0]),
-            int(args['인구수'])
-        ])
+        try:
+            X_new = np.array([
+                int(region.transform([args['위치']])[0]),
+                int(place.transform([args['장소']])[0]),
+                int(day.transform([args['요일']])[0]),
+                int(time.transform([args['시간대']])[0]),
+                int(args['인구수'])
+            ])
         
-        X_new = self.z_transform(X_new, x_td_mu, x_td_std).reshape(1, -1)
+            X_new = self.z_transform(X_new, x_td_mu, x_td_std).reshape(1, -1)
+            
+            prediction = self.inv_z_transform(model.predict(X_new), y_td_mu, y_td_std)
+    
+            prediction = prediction.round(3)
         
-        prediction = self.inv_z_transform(model.predict(X_new), y_td_mu, y_td_std)
-   
-        prediction = prediction.round(3)
-
-        out = {'절도': prediction[0][0],
-            '살인': prediction[0][1],
-            '강도': prediction[0][2],
-            '성폭력': prediction[0][3],
-            '폭행': prediction[0][4]}
-        return out, 200
+            out = {'절도': prediction[0][0],
+                '살인': prediction[0][1],
+                '강도': prediction[0][2],
+                '성폭력': prediction[0][3],
+                '폭행': prediction[0][4]}
+        
+            return out, 200
+        except:
+            return {"message": "json으로 전달되는 body 형식이 잘못되었습니다."}
