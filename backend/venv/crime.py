@@ -5,9 +5,9 @@ import pandas
 import json
 from sklearn.preprocessing import LabelEncoder
 
-class HelloWorld(Resource):
+class Example(Resource):
     def get(self):
-        return {'hello': 'world'}
+        return {'data': '예시 출력입니다.'}
 
 class PredictCrime(Resource):
     def z_transform(self, X, mu, std):
