@@ -2,10 +2,11 @@ from flask import Flask
 import flask_restful as flask_restful
 from flask_restful import Api
 from crime import District, Population, Place, Time, Day, PredictCrime
-
+from example import Example
 app = Flask(__name__)
 api = Api(app)
 
+api.add_resource(Example, '/')
 api.add_resource(District, '/district/')
 api.add_resource(Population, '/population/')
 api.add_resource(Place,'/place/')
