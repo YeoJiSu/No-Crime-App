@@ -95,7 +95,8 @@ class PredictCrime(Resource):
         """
         return y * (std+0.000001) + mu
 
-
+    def percentage(self, rate):
+        return round((1 - rate/4)*100)
     def post(self):
         region = LabelEncoder()
         place = LabelEncoder()
@@ -134,11 +135,11 @@ class PredictCrime(Resource):
     
             prediction = prediction.round(3)
         
-            out = {'절도': prediction[0][0],
-                '살인': prediction[0][1],
-                '강도': prediction[0][2],
-                '성폭력': prediction[0][3],
-                '폭행': prediction[0][4]}
+            out = {'절도': self.percentage(prediction[0][0]),
+                '살인': self.percentage(prediction[0][1]),
+                '강도': self.percentage(prediction[0][2]),
+                '성폭력': self.percentage(prediction[0][3]),
+                '폭행': self.percentage(prediction[0][4])}
         
             return {"data": out}, 200
         except:
