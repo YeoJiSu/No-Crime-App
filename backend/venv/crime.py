@@ -70,6 +70,14 @@ class Place(Resource):
     def get(self):
         data = ['아파트ㆍ연립ㆍ다세대',	'단독주택',	'노상',	'숙박업소ㆍ 목욕탕', '유흥접객업소', '사무실', '공장']
         return {"data": data}
+class Time(Resource):
+    def get(self):
+        data = ["00:00-02:59", "03:00-05:59", "06:00-08:59", "09:00-11:59", "12:00-14:59", "15:00-17:59", "18:00-20:59", "21:00-23:59"]
+        return {"data": data}
+class Day(Resource):
+    def get(self):
+        data = ["일", "월", "화", "수", "목", "금", "토"]
+        return {"data": data}
 class PredictCrime(Resource):
     def z_transform(self, X, mu, std):
         """
