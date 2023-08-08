@@ -5,10 +5,11 @@ import pandas
 import json
 from sklearn.preprocessing import LabelEncoder
 
+path = "file/"
 class District(Resource): 
     # 도/특별시/광역시 조회
     def get(self):
-        distinct_1= json.load(open('file/district.json', 'rb'))
+        distinct_1= json.load(open(path+'district.json', 'rb'))
         keys = [key for key in distinct_1]
         return {"data":keys}
     
@@ -18,7 +19,7 @@ class District(Resource):
         parser.add_argument('도.특별시.광역시')
         args = parser.parse_args()
         argument = args['도.특별시.광역시']
-        distinct_1= json.load(open('file/district.json', 'rb'))
+        distinct_1= json.load(open(path+'district.json', 'rb'))
         try:
             data = distinct_1[argument]
             return {"data": data}
@@ -34,7 +35,7 @@ class Population(Resource):
         args = parser.parse_args()
         argument_1 = args['도.특별시.광역시']
         argument_2 = args['시.군.구']
-        population= json.load(open('file/population.json', 'rb'))
+        population= json.load(open(path+'population.json', 'rb'))
         
         big_city = ["서울특별시","부산광역시","인천광역시","대구광역시","광주광역시","대전광역시","울산광역시"]
         small_city = ["부천","수원","성남","전주","안양","청주","창원","광명","포항","안산","진주","고양",
@@ -102,12 +103,12 @@ class PredictCrime(Resource):
         place = LabelEncoder()
         day = LabelEncoder()
         time = LabelEncoder()
-        region.classes_ = np.load('file/region.npy', allow_pickle=True)
-        place.classes_ = np.load('file/place.npy', allow_pickle=True)
-        day.classes_ = np.load('file/day.npy', allow_pickle=True)
-        time.classes_ = np.load('file/time.npy', allow_pickle=True)
-        x_td_mu,x_td_std,y_td_mu,y_td_std = np.load('file/new_x_y_mu_std.npy',allow_pickle=True)
-        model = p.load(open('file/linear.pickle', 'rb'))
+        region.classes_ = np.load(path+'region.npy', allow_pickle=True)
+        place.classes_ = np.load(path+'place.npy', allow_pickle=True)
+        day.classes_ = np.load(path+'day.npy', allow_pickle=True)
+        time.classes_ = np.load(path+'time.npy', allow_pickle=True)
+        x_td_mu,x_td_std,y_td_mu,y_td_std = np.load(path+'new_x_y_mu_std.npy',allow_pickle=True)
+        model = p.load(open(path+'linear.pickle', 'rb'))
         
         # 위치,	장소, 요일, 시간대,	인구수
         parser = reqparse.RequestParser()
