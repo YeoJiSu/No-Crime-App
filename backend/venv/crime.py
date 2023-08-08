@@ -7,7 +7,7 @@ from sklearn.preprocessing import LabelEncoder
 
 class Example(Resource):
     def get(self):
-        return {'data': '예시 출력입니다.'}
+        return {"data": "예시 출력입니다."}
 
 class PredictCrime(Resource):
     def z_transform(self, X, mu, std):
@@ -71,6 +71,6 @@ class PredictCrime(Resource):
                 '성폭력': prediction[0][3],
                 '폭행': prediction[0][4]}
         
-            return out, 200
+            return {"data": out}, 200
         except:
             return {"message": "json으로 전달되는 body 형식이 잘못되었습니다."}
