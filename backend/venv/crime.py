@@ -59,13 +59,17 @@ class Population(Resource):
                 
             number = population[district]
             data = {
-                "지역": district,
+                "위치": district,
                 "인구수": number
             }
             return {"data": data}
         except:
             return {"message": "json으로 전달되는 body 형식이 잘못되었습니다."}
 
+class Place(Resource):
+    def get(self):
+        data = ['아파트ㆍ연립ㆍ다세대',	'단독주택',	'노상',	'숙박업소ㆍ 목욕탕', '유흥접객업소', '사무실', '공장']
+        return {"data": data}
 class PredictCrime(Resource):
     def z_transform(self, X, mu, std):
         """
