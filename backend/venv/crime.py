@@ -25,7 +25,29 @@ class District(Resource):
             return {"data": data}
         except:
             return {"message": "json으로 전달되는 body 형식이 잘못되었습니다."}
-
+    
+    def district_name(self, arg_1, arg_2):
+        
+        big_city = ["서울특별시","부산광역시","인천광역시","대구광역시","광주광역시","대전광역시","울산광역시"]
+        small_city = ["부천","수원","성남","전주","안양","청주","창원","광명","포항","안산","진주","고양",
+                      "제주","목포","의정부","익산","군산","구미","천안","여수","춘천","원주","평택",
+                      "경주","김해","순천","군포","남양주","강릉","충주","안동","경산","아산","거제",
+                      "김천","정읍","용인","시흥","파주","양산","이천","구리","서산","제천","논산"]
+        
+        district = arg_1
+        if arg_1 in big_city:
+            if arg_2 == "전체":
+                district = arg_1[0:2]
+            else:
+                district = arg_1[0:2]+arg_2
+        elif arg_1 == "세종특별자치시":
+            district = "기타 도시"
+        else:
+            district = arg_2[:-1]
+            if district not in small_city:
+                district = "기타 도시"
+                
+        return district
 # 인구수 조회 api
 class Population(Resource): 
     def post(self):
@@ -37,27 +59,8 @@ class Population(Resource):
         argument_2 = args['시.군.구']
         population= json.load(open(path+'population.json', 'rb'))
         
-        big_city = ["서울특별시","부산광역시","인천광역시","대구광역시","광주광역시","대전광역시","울산광역시"]
-        small_city = ["부천","수원","성남","전주","안양","청주","창원","광명","포항","안산","진주","고양",
-                      "제주","목포","의정부","익산","군산","구미","천안","여수","춘천","원주","평택",
-                      "경주","김해","순천","군포","남양주","강릉","충주","안동","경산","아산","거제",
-                      "김천","정읍","용인","시흥","파주","양산","이천","구리","서산","제천","논산"]
-
-        
         try:
-            district = argument_1
-            if argument_1 in big_city:
-                if argument_2 == "전체":
-                    district = argument_1[0:2]
-                else:
-                    district = argument_1[0:2]+argument_2
-            elif argument_1 == "세종특별자치시":
-                district = "기타 도시"
-            else:
-                district = argument_2[:-1]
-                if district not in small_city:
-                    district = "기타 도시"
-                
+            district = District().district_name(argument_1, argument_2)
             number = population[district]
             data = {
                 "위치": district,
