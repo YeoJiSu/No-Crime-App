@@ -4,6 +4,9 @@
         android:label="crime"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyBSJ0huJFslmMQtrT8q7NI-xJc8IYvFO9A"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
