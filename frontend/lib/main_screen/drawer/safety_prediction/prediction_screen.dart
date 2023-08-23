@@ -52,14 +52,6 @@ class _PredictionScreenState extends State<PredictionScreen> {
     });
   }
 
-  void onDistrictChanged(String firstDistrict) {
-    setState(() {
-      dropDownValue2 = null;
-      secondDistrictList =
-          CrimeApiService().getSecondDistrictList(firstDistrict);
-    });
-  }
-
   void setValue1(String? value) {
     setState(() {
       dropDownValue2 = null;
@@ -217,10 +209,35 @@ class _PredictionScreenState extends State<PredictionScreen> {
                             ],
                           ),
                           const SizedBox(height: 10),
-                          Text(
-                            "오늘 $month월 $day일 ${predictionParms["요일"]}요일 ${predictionParms['위치']} ${predictionParms['장소']}은\n${crimeModel.getBestRatioType()}로 부터 안전하지만,\n${crimeModel.getWorstRatioType()}으로 부터는 안전해야합니다.",
-                            textAlign: TextAlign.center,
-                          )
+                          Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                    text:
+                                        '오늘 $month월 $day일 ${predictionParms["요일"]}요일 '),
+                                TextSpan(
+                                    text:
+                                        '${predictionParms['위치']} ${predictionParms['장소']}',
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold)),
+                                const TextSpan(text: '은'),
+                              ],
+                            ),
+                          ),
+                          Text.rich(TextSpan(children: [
+                            TextSpan(
+                                text: crimeModel.getBestRatioType(),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold)),
+                            const TextSpan(text: '로 부터 안전하지만'),
+                          ])),
+                          Text.rich(TextSpan(children: [
+                            TextSpan(
+                                text: crimeModel.getWorstRatioType(),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold)),
+                            const TextSpan(text: '으로부터는 안전해야합니다.'),
+                          ]))
                         ],
                       ),
                     ),
