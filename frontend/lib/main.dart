@@ -1,4 +1,4 @@
-import 'package:crime/auth_screen/login_screen.dart';
+import 'package:crime/main_screen/drawer/safety_prediction/prediction_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
             seedColor: const Color.fromRGBO(233, 227, 93, 0)),
         useMaterial3: true,
       ),
-      home: const LoginScreen(),
+      home: const PredictionScreen(),
     );
   }
 }
