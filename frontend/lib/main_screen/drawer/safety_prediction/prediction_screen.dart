@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:crime/auth_screen/widget/push_button_widget.dart';
+import 'package:crime/main_screen/drawer/widgets/bar_graph_widget.dart';
 import 'package:crime/main_screen/widgets/my_bottom_nav_bar.dart';
 import 'package:crime/models/crime_model.dart';
 import 'package:crime/models/population_model.dart';
@@ -180,6 +181,7 @@ class _PredictionScreenState extends State<PredictionScreen> {
                       width: constraints.maxWidth,
                       child: Column(
                         children: [
+                          const BarGraphWidget(),
                           const Text("막대 이미지"),
                           Wrap(
                             alignment: WrapAlignment.spaceBetween,

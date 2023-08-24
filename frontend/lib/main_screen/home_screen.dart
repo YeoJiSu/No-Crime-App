@@ -1,8 +1,12 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:crime/auth_screen/widget/push_button_widget.dart';
 import 'package:crime/main_screen/drawer/drawer.dart';
 import 'package:crime/main_screen/drawer/safety_prediction/prediction_screen.dart';
 import 'package:crime/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'widgets/my_bottom_nav_bar.dart';
@@ -21,7 +25,9 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   final PageController _pageController = PageController();
   late GoogleMapController _googleMapController;
-  final LatLng _center = const LatLng(35.23409794921352, 129.08066941841653);
+  final Completer<GoogleMapController> _controller =
+      Completer<GoogleMapController>();
+  final LatLng _center = const LatLng(30, 120);
 
   String? dropDownValue;
   void setValue(String? value) {
@@ -33,28 +39,53 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void dispose() {
     _pageController.dispose();
+    _googleMapController.dispose();
     super.dispose();
   }
 
   void _onMapCreated(GoogleMapController controller) {
     _googleMapController = controller;
+    // _controller.complete(controller);
+    // _googleMapController.
+  }
+
+  Future<Position> getLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    return position;
+  }
+
+  Future<void> logCurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    log("${position.latitude}");
+    log("${position.longitude}");
+    LatLng currentLatLng = LatLng(position.latitude, position.longitude);
+    _googleMapController.moveCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: currentLatLng,
+          zoom: 15,
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: mainColor,
-          title: const Text(
-            "No crime",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: mainColor,
+        title: const Text(
+          "No crime",
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        endDrawer: MyDrawer(height: height, width: width),
-        body: Padding(
+      ),
+      endDrawer: MyDrawer(height: height, width: width),
+      body: SafeArea(
+        child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
           child: Column(
             children: [
@@ -84,6 +115,8 @@ class _HomeScreenState extends State<HomeScreen>
                         initialCameraPosition:
                             CameraPosition(target: _center, zoom: 15),
                         onMapCreated: _onMapCreated,
+                        myLocationEnabled: true,
+                        myLocationButtonEnabled: true,
                       ),
                     ),
                   ),
@@ -98,55 +131,15 @@ class _HomeScreenState extends State<HomeScreen>
                 hint: "장소",
                 onChanged: setValue,
               ),
-              const PushButton(text: "범죄 안전도 예측하기"),
-              // Expanded(
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.stretch,
-              //     children: [
-              //       Flexible(
-              //           fit: FlexFit.tight,
-              //           child: Image.asset(
-              //             "assets/images/image1.png",
-              //           )),
-              //       const SizedBox(height: 20),
-              //       Flexible(
-              //         fit: FlexFit.tight,
-              //         child: PageView(
-              //           controller: _pageController,
-              //           children: [
-              //             Column(
-              //                 crossAxisAlignment: CrossAxisAlignment.stretch,
-              //                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //                 children: [
-              //                   Container(
-              //                     color: boxColor,
-              //                     alignment: Alignment.center,
-              //                     child: const Text("현재 나의 위치 범죄 안전도 예측하기"),
-              //                   ),
-              //                   Center(
-              //                     child: Icon(
-              //                       Icons.question_mark_sharp,
-              //                       size:
-              //                           MediaQuery.of(context).size.height / 4,
-              //                     ),
-              //                   ),
-              //                 ]),
-              //             Container(
-              //               margin: const EdgeInsets.symmetric(horizontal: 10),
-              //               color: boxColor,
-              //               child: const Center(child: Text("그래프")),
-              //             )
-              //           ],
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // )
+              PushButton(
+                text: "범죄 안전도 예측하기",
+                onTap: logCurrentLocation,
+              ),
             ],
           ),
         ),
-        bottomNavigationBar: const MyBottomNavBar(),
       ),
+      bottomNavigationBar: const MyBottomNavBar(),
     );
   }
 }
