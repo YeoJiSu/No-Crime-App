@@ -1,3 +1,5 @@
 .DS_Store
 
-backend/venv/lib/python3.9/
+backend/venv/lib/python3.9/site-packages/
+
+*.pyc
