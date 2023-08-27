@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:nocrime/screens/cctv_map_screen.dart';
+import 'package:nocrime/screens/predict_here_screen.dart';
+import 'package:nocrime/screens/predict_other_screen.dart';
+import 'package:nocrime/screens/search_crime_screen.dart';
+import 'package:nocrime/screens/white_paper_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -34,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String showSmallTitle() {
     switch (_selectedIndex) {
       case 0:
-        return "No Crime의 인공지능은 위치와 장소를 바탕으로 시간대별  범죄 안전도를 예측해줘요!";
+        return "No Crime의 인공지능은 사용자의 실시간 위치와 장소를 바탕으로 시간대별  범죄 안전도를 예측해줘요!";
       case 1:
         return "지역별로 각 연도에 5대 강력 범죄가 총 몇 건 발생했는지 조회할 수 있어요!";
       case 2:
@@ -115,6 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(
@@ -155,13 +161,51 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 1.5,
                             ),
                           ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              if (_selectedIndex == 0)
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color.fromRGBO(
+                                        131, 131, 255, 0.5),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const PredictOtherScreen()),
+                                    );
+                                  },
+                                  child: const Text(
+                                    '다른 지역 예측하기 >',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
-                    const Text(
-                      "hi",
-                      style: TextStyle(fontSize: 600),
+                    const SizedBox(
+                      height: 30,
                     ),
+                    if (_selectedIndex == 0) const PredictHereScreen(),
+                    if (_selectedIndex == 1) const SearchCrimeScreen(),
+                    if (_selectedIndex == 2) const CctvMapScreen(),
+                    if (_selectedIndex == 3) const WhitePaperScreen(),
                   ],
                 ),
               ),
