@@ -21,6 +21,10 @@ class _HomeScreenState extends State<HomeScreen> {
     "CCTV 지도",
     "사용 백서",
   ];
+  @override
+  void initState() {
+    super.initState();
+  }
 
   String showBigTitle() {
     switch (_selectedIndex) {
@@ -29,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
       case 1:
         return "5대 강력 범죄 건수 조회";
       case 2:
-        return "No Crime만의 방범용 CCTV 지도";
+        return "방범용 CCTV 지도";
       case 3:
         return "No Crime 사용 백서";
     }
@@ -78,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 10),
+                          horizontal: 8, vertical: 8),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -88,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: _selectedIndex == index
                                   ? Colors.white
                                   : const Color.fromRGBO(206, 206, 206, 1),
-                              fontSize: 19,
+                              fontSize: 17.5,
                               fontWeight: _selectedIndex == index
                                   ? FontWeight.bold
                                   : FontWeight.normal,
@@ -143,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             showBigTitle(),
                             style: const TextStyle(
-                              fontSize: 20,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                               letterSpacing: 1.0,
@@ -161,14 +165,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 1.5,
                             ),
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const SizedBox(
-                                height: 10,
+                                height: 1,
                               ),
                               if (_selectedIndex == 0)
                                 ElevatedButton(
@@ -233,7 +234,7 @@ class firstAppBar extends StatelessWidget {
             "No Crime",
             style: TextStyle(
               color: Color.fromRGBO(128, 255, 179, 1),
-              fontSize: 22,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
