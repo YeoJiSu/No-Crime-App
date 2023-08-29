@@ -3,7 +3,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nocrime/models/crime_model.dart';
 import 'package:nocrime/models/population_model.dart';
 import 'package:nocrime/services/api_service_crime.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:nocrime/widgets/crime_ratio_graph.dart';
+import 'package:nocrime/widgets/select_box_widget.dart';
 
 late Future<List<CrimeModel>> crimeList;
 late Future<PopulationModel> populationModel;
@@ -45,15 +46,15 @@ class _PredictOtherScreenState extends State<PredictOtherScreen> {
   void _onTap() async {
     String text = "모든";
     if (dropDownValue1 == null) {
-      text = "첫번째";
+      text = "첫번째 '도/특별시/광역시' ";
     } else if (dropDownValue2 == null) {
-      text = "두번째";
+      text = "두번째 '시/군/구' ";
     } else if (dropDownValue3 == null) {
-      text = "세번째";
+      text = "세번째 '장소' ";
     } else if (dropDownValue4 == null) {
-      text = "네번째";
+      text = "네번째 '요일' ";
     } else if (dropDownValue5 == null) {
-      text = "다섯번째";
+      text = "다섯번째 '시간대' ";
     }
     if (dropDownValue1 == "세종특별자치시" &&
         dropDownValue2 == null &&
@@ -143,6 +144,7 @@ class _PredictOtherScreenState extends State<PredictOtherScreen> {
     );
 
     crimeModel = await CrimeApiService().getCrimeModel(predictionParms);
+    print(predictionParms);
     setState(() {
       _offstage = false;
     });
@@ -247,7 +249,7 @@ class _PredictOtherScreenState extends State<PredictOtherScreen> {
             const Text(
               '다른 지역 예측하기',
               style: TextStyle(
-                fontSize: 22,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -256,7 +258,10 @@ class _PredictOtherScreenState extends State<PredictOtherScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 25,
+            vertical: 20,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -273,15 +278,15 @@ class _PredictOtherScreenState extends State<PredictOtherScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Text(
-                      " 5대 범죄 안전도를 예측할 수 있어요!",
+                      "🚔 5대 범죄 안전도를 예측할 수 있어요!",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 20,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 14,
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.min,
@@ -334,11 +339,11 @@ class _PredictOtherScreenState extends State<PredictOtherScreen> {
                           fit: FlexFit.tight,
                           flex: 2,
                           child: Align(
-                            heightFactor: 6.85,
+                            heightFactor: 5.4,
                             alignment: Alignment.bottomCenter,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                fixedSize: const Size(120, 47),
+                                fixedSize: const Size(120, 40),
                                 backgroundColor:
                                     const Color.fromRGBO(131, 131, 255, 0.4),
                                 shape: RoundedRectangleBorder(
@@ -351,7 +356,6 @@ class _PredictOtherScreenState extends State<PredictOtherScreen> {
                                 "예측하기",
                                 style: TextStyle(
                                   fontSize: 16,
-                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
@@ -360,7 +364,7 @@ class _PredictOtherScreenState extends State<PredictOtherScreen> {
                       ],
                     ),
                     const SizedBox(
-                      height: 24,
+                      height: 30,
                     ),
                     LayoutBuilder(
                       builder:
@@ -373,11 +377,21 @@ class _PredictOtherScreenState extends State<PredictOtherScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const Text(
-                                    "[ 예측 결과 ]",
+                                    "🚔 예측 결과",
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 20,
+                                      fontSize: 18,
                                       fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  const Text(
+                                    "아래는 5대 범죄별 '안전도' 수치를 나타낸 그래프입니다! 수치가 높을수록 해당 범죄에 대해 안전합니다 😊",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
                                     ),
                                   ),
                                   const SizedBox(
@@ -395,7 +409,7 @@ class _PredictOtherScreenState extends State<PredictOtherScreen> {
                                               : '$diff일 후, $month월 $day일 ${predictionParms["요일"]}요일 ${predictionParms["시간대"]} 시간 동안에, ',
                                           style: const TextStyle(
                                             color: Colors.white,
-                                            fontSize: 18,
+                                            fontSize: 16,
                                             height: 1.5,
                                           ),
                                         ),
@@ -404,7 +418,7 @@ class _PredictOtherScreenState extends State<PredictOtherScreen> {
                                               '$dropDownValue1 $dropDownValue2의 ${predictionParms['장소']}',
                                           style: const TextStyle(
                                             color: Colors.white,
-                                            fontSize: 18,
+                                            fontSize: 16,
                                             height: 1.5,
                                           ),
                                         ),
@@ -412,7 +426,7 @@ class _PredictOtherScreenState extends State<PredictOtherScreen> {
                                           text: '은 "',
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 18,
+                                            fontSize: 16,
                                             height: 1.5,
                                           ),
                                         ),
@@ -420,8 +434,9 @@ class _PredictOtherScreenState extends State<PredictOtherScreen> {
                                           text: crimeModel.getBestRatioType(),
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                            fontSize: 18,
+                                            color: Color.fromRGBO(
+                                                128, 255, 179, 1),
+                                            fontSize: 16,
                                             height: 1.5,
                                           ),
                                         ),
@@ -429,7 +444,7 @@ class _PredictOtherScreenState extends State<PredictOtherScreen> {
                                           text: ' 안전도"는 높지만, "',
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 18,
+                                            fontSize: 16,
                                             height: 1.5,
                                           ),
                                         ),
@@ -440,8 +455,9 @@ class _PredictOtherScreenState extends State<PredictOtherScreen> {
                                                   .getWorstRatioType(),
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                                fontSize: 18,
+                                                color: Color.fromRGBO(
+                                                    128, 255, 179, 1),
+                                                fontSize: 16,
                                                 height: 1.5,
                                               ),
                                             ),
@@ -449,7 +465,7 @@ class _PredictOtherScreenState extends State<PredictOtherScreen> {
                                               text: ' 안전도"는 낮으니 주의하셔야 합니다!',
                                               style: TextStyle(
                                                 color: Colors.white,
-                                                fontSize: 18,
+                                                fontSize: 16,
                                                 height: 1.5,
                                               ),
                                             ),
@@ -459,7 +475,7 @@ class _PredictOtherScreenState extends State<PredictOtherScreen> {
                                     ),
                                   ),
                                   const SizedBox(
-                                    height: 8,
+                                    height: 30,
                                   ),
                                 ],
                               )),
@@ -478,337 +494,4 @@ class _PredictOtherScreenState extends State<PredictOtherScreen> {
       ),
     );
   }
-}
-
-class SelectBoxWidget extends StatefulWidget {
-  final Future<List<String>> future;
-  final String hint;
-  final void Function(String) onChanged;
-  final String? dropDownValue;
-
-  const SelectBoxWidget({
-    required Key key,
-    required this.future,
-    required this.dropDownValue,
-    required this.hint,
-    required this.onChanged,
-  }) : super(key: key);
-
-  @override
-  State<SelectBoxWidget> createState() => _SelectBoxWidgetState();
-}
-
-class _SelectBoxWidgetState extends State<SelectBoxWidget> {
-  String? dropDownValue;
-
-  void setPredictionParms(String? value) {
-    var keyTag = widget.key.toString();
-    predictionParms[
-        keyTag.substring(2, keyTag.length - 2).replaceAll('\'', '')] = value;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    const double paddingSize = 11;
-    return FutureBuilder(
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        return snapshot.hasData
-            ? Padding(
-                padding: const EdgeInsets.only(
-                    left: 10, right: 0, top: paddingSize, bottom: paddingSize),
-                child: Container(
-                  width: 200,
-                  decoration: BoxDecoration(
-                    color: const Color.fromRGBO(131, 131, 255, 0.4),
-                    border:
-                        Border.all(strokeAlign: BorderSide.strokeAlignOutside),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: DropdownButton(
-                    elevation: 8,
-                    dropdownColor: const Color.fromARGB(255, 37, 37, 47),
-                    value: widget.dropDownValue,
-                    hint: Text(
-                      widget.hint,
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    icon: const Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: Colors.white,
-                    ),
-                    menuMaxHeight: 400,
-                    padding: const EdgeInsets.symmetric(horizontal: 13),
-                    isExpanded: true,
-                    underline: const SizedBox(),
-                    items: snapshot.data!
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: const TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      print('$value');
-                      if (value != null) {
-                        widget.onChanged(value);
-                        setPredictionParms(value);
-                      }
-                    },
-                  ),
-                ),
-              )
-            : const CircularProgressIndicator();
-      },
-      future: widget.future,
-    );
-  }
-}
-
-class CrimeRatioGraph extends StatelessWidget {
-  const CrimeRatioGraph({
-    super.key,
-    required this.crimeModel,
-  });
-
-  final CrimeModel crimeModel;
-  @override
-  Widget build(BuildContext context) {
-    int ratio1 = crimeModel.theft;
-    int ratio2 = crimeModel.murder;
-    int ratio3 = crimeModel.robbery;
-    int ratio4 = crimeModel.sexual_assault;
-    int ratio5 = crimeModel.assault;
-    List<int> ratios = [ratio1, ratio2, ratio3, ratio4, ratio5];
-    ratios.sort();
-
-    Color getMatchColor(int crimeRatio) {
-      Color matchColor = Colors.blue;
-
-      if (crimeRatio == ratios[0]) {
-        matchColor = Colors.red;
-      } else if (crimeRatio == ratios[1]) {
-        matchColor = Colors.orange;
-      } else if (crimeRatio == ratios[2]) {
-        matchColor = Colors.yellow;
-      } else if (crimeRatio == ratios[3]) {
-        matchColor = Colors.green;
-      } else if (crimeRatio == ratios[4]) {
-        matchColor = Colors.blue;
-      }
-
-      return matchColor;
-    }
-
-    final List<charts.Series<CrimeData, String>> seriesList = [
-      charts.Series<CrimeData, String>(
-        id: 'Crimes',
-        colorFn: (_, __) => charts.ColorUtil.fromDartColor(
-            const Color.fromARGB(255, 66, 63, 73)),
-        domainFn: (CrimeData crime, _) => crime.crimeType,
-        measureFn: (CrimeData crime, _) => crime.percentage,
-        data: [
-          CrimeData('절도', ratio1),
-          CrimeData('살인', ratio2),
-          CrimeData('강도', ratio3),
-          CrimeData('성폭력', ratio4),
-          CrimeData('폭행', ratio5),
-        ],
-      ),
-    ];
-
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                Container(
-                  height: 70,
-                  width: 70,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(width: 9, color: getMatchColor(ratio1)),
-                  ),
-                  child: Text(
-                    "$ratio1%",
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontStyle: FontStyle.italic,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  "절도 안전도",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Container(
-                  height: 70,
-                  width: 70,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(width: 9, color: getMatchColor(ratio2)),
-                  ),
-                  child: Text(
-                    "$ratio2%",
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontStyle: FontStyle.italic,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  "살인 안전도",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Container(
-                  height: 70,
-                  width: 70,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(width: 9, color: getMatchColor(ratio3)),
-                  ),
-                  child: Text(
-                    "$ratio3%",
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontStyle: FontStyle.italic,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  "강도 안전도",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Container(
-                  height: 70,
-                  width: 70,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(width: 9, color: getMatchColor(ratio4)),
-                  ),
-                  child: Text(
-                    "$ratio4%",
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontStyle: FontStyle.italic,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  "성폭력 안전도",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Container(
-                  height: 70,
-                  width: 70,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(width: 9, color: getMatchColor(ratio5)),
-                  ),
-                  child: Text(
-                    "$ratio5%",
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontStyle: FontStyle.italic,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  "폭력 안전도",
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              width: 400, // 적절한 너비를 설정해주세요
-              height: 240, // 적절한 높이를 설정해주세요
-
-              child: charts.BarChart(
-                seriesList,
-                animate: true,
-                vertical: false, // 수평 막대 그래프 설정
-
-                defaultRenderer: charts.BarRendererConfig(
-                  // 여기서 색깔을 지정합니다.
-
-                  cornerStrategy: const charts.ConstCornerStrategy(30),
-                  groupingType: charts.BarGroupingType.stacked,
-                  fillPattern: charts.FillPatternType.solid,
-                  strokeWidthPx: 2.0,
-                  barRendererDecorator: charts.BarLabelDecorator<String>(),
-                  customRendererId: 'customColor',
-
-                  // 막대 그래프의 색상을 변경하는 방법입니다.
-                  // 리스트의 각 항목에 색상을 할당합니다.
-                  // 여기서는 colors 리스트를 임의로 지정하겠습니다.
-                  // colors: [charts.ColorUtil.fromDartColor(Colors.blue), charts.ColorUtil.fromDartColor(Colors.red), ...],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class CrimeData {
-  final String crimeType;
-  final int percentage;
-
-  CrimeData(this.crimeType, this.percentage);
 }
