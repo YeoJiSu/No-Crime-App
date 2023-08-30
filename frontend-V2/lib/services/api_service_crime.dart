@@ -12,7 +12,9 @@ class CrimeApiService {
   final String place = 'place';
   final String day = 'day';
   final String time = 'time';
+  final String year = 'year';
   final String predict = 'predict';
+  final String search = 'search';
   final Map<String, String> _headers = {
     "Content-Type": "application/json",
     // 'Accept': 'application/json'
@@ -126,6 +128,30 @@ class CrimeApiService {
     }
   }
 
+  Future<CrimeModel> getSearch(
+      String firstDistrict, String secondDistrict, String year) async {
+    final data = {
+      "도.특별시.광역시": firstDistrict,
+      "시.군.구": secondDistrict,
+      "연도": year
+    };
+    final body = jsonEncode(data);
+
+    final url = Uri.parse("$host/$search/");
+    final response = await http.post(
+      url,
+      headers: _headers,
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      var jsonPopMap = jsonDecode(response.body);
+      return CrimeModel.fromJson(jsonPopMap['data']);
+    } else {
+      throw Error();
+    }
+  }
+
   Future<List<String>> getPlaceList() async {
     List<String> placeInstances = [];
 
@@ -172,6 +198,23 @@ class CrimeApiService {
         timeInstances.add(time);
       }
       return timeInstances;
+    } else {
+      throw Error();
+    }
+  }
+
+  Future<List<String>> getYearList() async {
+    List<String> yearInstances = [];
+
+    final url = Uri.parse("$host/$year");
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      var jsonYear = jsonDecode(response.body);
+      for (var year in jsonYear['data']) {
+        yearInstances.add(year);
+      }
+      return yearInstances;
     } else {
       throw Error();
     }
