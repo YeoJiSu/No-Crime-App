@@ -28,13 +28,13 @@ class SearchCrime(Resource):
             _crime = _year[[district]].values.reshape(1,-1)[0]
             
             data = {
-                "절도": str(_crime[0]),
-                "살인": str(_crime[1]),
-                "강도": str(_crime[2]),
-                "성폭력": str(_crime[3]),
-                "폭행": str(_crime[4])
+                "절도": round(_crime[0]),
+                "살인": round(_crime[1]),
+                "강도": round(_crime[2]),
+                "성폭력": round(_crime[3]),
+                "폭행": round(_crime[4])
             }
-            return {"data": data}
+            return {"data": data},200
         
         except:
             return {"message": "json으로 전달되는 body 형식이 잘못되었습니다."}
