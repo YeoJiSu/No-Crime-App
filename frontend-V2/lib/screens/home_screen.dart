@@ -241,21 +241,19 @@ class firstAppBar extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               // 버튼을 눌렀을 때 실행할 작업을 추가하세요.
-              () async {
-                final url = Uri.parse('tel:112');
-                try {
-                  if (await canLaunchUrl(url)) {
-                    await launchUrl(url);
-                    print("success calling 112");
-                  } else {
-                    print("Can't launch URL");
-                  }
-                } catch (e) {
-                  print(e);
+              final url = Uri.parse('tel:112');
+              try {
+                if (await canLaunchUrl(url)) {
+                  await launchUrl(url);
+                  print("success calling 112");
+                } else {
+                  print("Can't launch URL");
                 }
-              };
+              } catch (e) {
+                print(e);
+              }
             },
             style: ElevatedButton.styleFrom(
               textStyle: const TextStyle(
