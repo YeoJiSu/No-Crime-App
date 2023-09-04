@@ -17,7 +17,7 @@
 ### Rest API
 * python, Flask 
 * source code: https://github.com/YeoJiSu/No-Crime-App/tree/main/backend
-* document: https://documenter.getpostman.com/view/15493095/2s9Y5eNKbV
+* published document: https://documenter.getpostman.com/view/15493095/2s9Y5eNKbV
 
 ### Application
 * Dart, Flutter
