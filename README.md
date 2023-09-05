@@ -1,4 +1,6 @@
 # No Crime
+> 인공지능, Rest API, Application 모두 직접 제작해서 구현한 프로젝트
+
 
 [영상]
 
