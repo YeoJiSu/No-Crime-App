@@ -2,7 +2,7 @@
 > 💡 범죄 안전도를 예측하는 앱 서비스  <br> 
 > 💡 인공지능, Rest API, Application 모두 직접 제작해서 구현한 프로젝트 <br> 
 
-### [시연 영상 전체 보기](https://photos.app.goo.gl/g7XCYdQawfQ8n8vG7)
+### [시연 영상 전체 보기 👈🏻](https://photos.app.goo.gl/g7XCYdQawfQ8n8vG7)
 <a href="https://photos.app.goo.gl/g7XCYdQawfQ8n8vG7"><img src="https://github.com/YeoJiSu/No-Crime-App/assets/76769044/11d8b383-3102-4937-85e5-7b43e4f5f8bb" width = 300/></a>
 
 #### 주요 기능
