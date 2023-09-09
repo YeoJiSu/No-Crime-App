@@ -3,7 +3,7 @@
 > 💡 인공지능, Rest API, Application 모두 직접 제작해서 구현한 프로젝트 <br> 
 
 ### [어플 소개 자료 👈🏻](https://www.canva.com/design/DAFtvgqR1WU/MlijIKjzEDp914R6AgCiiQ/edit?utm_content=DAFtvgqR1WU&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
-### [시연 영상 👈🏻](https://photos.app.goo.gl/g7XCYdQawfQ8n8vG7)
+### [전체 시연 영상 👈🏻](https://photos.app.goo.gl/g7XCYdQawfQ8n8vG7)
 <img src="https://github.com/YeoJiSu/No-Crime-App/assets/76769044/965dc848-7ee5-41d0-a563-12cffa838666" height="500"/>
 
 
