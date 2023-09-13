@@ -62,7 +62,7 @@ https://github.com/YeoJiSu/No-Crime-App/assets/76769044/59378c91-177e-4491-a18c-
 * source code: https://github.com/YeoJiSu/Predicting-Crime-ML-model
 
 ### 🌱 Rest API
-* python, Flask 
+* python, Flask, [pythonanywhere](https://www.pythonanywhere.com/)
 * source code: https://github.com/YeoJiSu/No-Crime-App/tree/main/backend
 * published document: https://documenter.getpostman.com/view/15493095/2s9Y5eNKbV
 
